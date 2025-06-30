@@ -27,3 +27,9 @@ SELECT actor_id, first_name, last_name, last_update FROM sakila.actor
 INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/actor.csv'
 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
 這樣匯出的 CSV 會包含表頭。
+
+
+kaggle上取得資料進行分析
+
+DAX學習的網站
+https://learn.microsoft.com/zh-tw/dax/
