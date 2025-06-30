@@ -6,56 +6,56 @@
 </head>
 <body>
     <pre>
-✅ 方法一：改用有權限的帳號（如 root）
-打開你的 Python 程式 gasther.py，找到這段（或類似）：
+    ✅ 方法一：改用有權限的帳號（如 root）
+    打開你的 Python 程式 gasther.py，找到這段（或類似）：
 
-python
-複製
-編輯
-mysql.connector.connect(
-    host="localhost",
-    user="dbuser2",
-    password="你的密碼",
-    database="house2"
-)
-改成用 root 或有更高權限的使用者：
+    python
+    複製
+    編輯
+    mysql.connector.connect(
+        host="localhost",
+        user="dbuser2",
+        password="你的密碼",
+        database="house2"
+    )
+    改成用 root 或有更高權限的使用者：
 
-python
-複製
-編輯
-mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root的密碼",
-    database="house2"
-)
-✅ 方法二：用 root 賦予 dbuser2 權限
-登入 MySQL CLI 或用 Workbench 用 root 帳號登入。
+    python
+    複製
+    編輯
+    mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root的密碼",
+        database="house2"
+    )
+    ✅ 方法二：用 root 賦予 dbuser2 權限
+    登入 MySQL CLI 或用 Workbench 用 root 帳號登入。
 
-執行：
+    執行：
 
-sql
-複製
-編輯
-GRANT ALL PRIVILEGES ON house2.* TO 'dbuser2'@'%';
-FLUSH PRIVILEGES;
-這樣就賦予 dbuser2 對 house2 資料庫的完全權限。
+    sql
+    複製
+    編輯
+    GRANT ALL PRIVILEGES ON house2.* TO 'dbuser2'@'%';
+    FLUSH PRIVILEGES;
+    這樣就賦予 dbuser2 對 house2 資料庫的完全權限。
 
-⚠️ 如果 house2 還沒被建立，你也可以先給 dbuser2 建立資料庫的權限：
+    ⚠️ 如果 house2 還沒被建立，你也可以先給 dbuser2 建立資料庫的權限：
 
-sql
-複製
-編輯
-GRANT CREATE ON *.* TO 'dbuser2'@'%';
-🧪 檢查權限
-你可以這樣查詢 dbuser2 的權限：
+    sql
+    複製
+    編輯
+    GRANT CREATE ON *.* TO 'dbuser2'@'%';
+    🧪 檢查權限
+    你可以這樣查詢 dbuser2 的權限：
 
-sql
-複製
-編輯
-SHOW GRANTS FOR 'dbuser2'@'%';
-補充：Python 中執行 create database 的建議
-通常用 root 帳號或管理員建立資料庫後，再讓一般帳號去操作會更安全穩定。
+    sql
+    複製
+    編輯
+    SHOW GRANTS FOR 'dbuser2'@'%';
+    補充：Python 中執行 create database 的建議
+    通常用 root 帳號或管理員建立資料庫後，再讓一般帳號去操作會更安全穩定。
     </pre>
 </body>
 </html>

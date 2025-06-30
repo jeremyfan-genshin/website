@@ -1,16 +1,68 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>我的筆記庫</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .note {
+      background: #fff;
+      border-left: 5px solid #3498db;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h1>這是學習記錄</h1>
-    <h2>修改首頁內容</h2>
-    <h2><a href="products.html">產品頁面1</a></h2>
-    <h2></h2><a href="https://www.google.com/">Google</a></h2>
-    <h2></h2><a href="https://github.com/jeremyfan-genshin/website/tree/main">Git Hub</a></h2>
-    <h2>這是2025/06/27新增的內容</h2>
-    <a href="20250630.html">20250630</a>
+
+  <h1>📘 我的筆記庫</h1>
+
+  <div class="note">
+    <h2>🧠 主題：機器學習簡介</h2>
+    <h3>📌 關鍵概念</h3>
+    <ul>
+      <li>監督學習 vs 非監督學習</li>
+      <li>模型訓練與評估</li>
+    </ul>
+
+    <h3>📚 重點整理</h3>
+    <p>
+      監督學習是透過有標籤的資料來訓練模型，最常見的應用是分類與回歸問題。非監督學習則用於資料分群與降維。
+    </p>
+
+    <h3>💭 我的思考</h3>
+    <p>
+      深度學習可視為監督學習的延伸，但需要大量資料與計算資源。下一步可以研究 CNN 與 RNN 的架構差異。
+    </p>
+
+    <h3>🔗 參考資料</h3>
+    <ul>
+      <li><a href="https://developers.google.com/machine-learning">Google ML 教學</a></li>
+      <li><a href="https://zh.wikipedia.org/wiki/機器學習">維基百科 - 機器學習</a></li>
+    </ul>
+  </div>
+
 </body>
 </html>

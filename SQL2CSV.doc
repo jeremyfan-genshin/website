@@ -1,0 +1,251 @@
+以下為MySQL中，將資料表匯出的指令:
+
+
+select 'actor_id', 'first_name', 'last_name', 'last_update'
+UNION ALL  
+SELECT `actor`.`actor_id`,
+    `actor`.`first_name`,
+    `actor`.`last_name`,
+    `actor`.`last_update`
+FROM `sakila`.`actor`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/actor.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'address_id', 'address', 'address2', 'district', 'city_id', 'postal_code', 'phone', 'location', 'last_update'
+UNION ALL  
+SELECT `address`.`address_id`,
+    `address`.`address`,
+    `address`.`address2`,
+    `address`.`district`,
+    `address`.`city_id`,
+    `address`.`postal_code`,
+    `address`.`phone`,
+    `address`.`location`,
+    `address`.`last_update`
+FROM `sakila`.`address`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/address.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'category_id', 'name', 'last_update'
+UNION ALL  
+SELECT `category`.`category_id`,
+    `category`.`name`,
+    `category`.`last_update`
+FROM `sakila`.`category`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/category.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'city_id', 'city', 'country_id','last_update'
+UNION ALL  
+SELECT `city`.`city_id`,
+    `city`.`city`,
+    `city`.`country_id`,
+    `city`.`last_update`
+FROM `sakila`.`city`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/city.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'country_id', 'country', 'last_update'
+UNION ALL  
+SELECT `country`.`country_id`,
+    `country`.`country`,
+    `country`.`last_update`
+FROM `sakila`.`country`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/country.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'customer_id', 'store_id', 'first_name', 'last_name', 'email', 'address_id', 'active', 'create_date', 'last_update'
+UNION ALL  
+SELECT `customer`.`customer_id`,
+    `customer`.`store_id`,
+    `customer`.`first_name`,
+    `customer`.`last_name`,
+    `customer`.`email`,
+    `customer`.`address_id`,
+    `customer`.`active`,
+    `customer`.`create_date`,
+    `customer`.`last_update`
+FROM `sakila`.`customer`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/customer.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'film_id',
+    'title',
+    'description',
+    'release_year',
+    'language_id',
+    'original_language_id',
+    'rental_duration',
+    'rental_rate',
+    'length',
+    'replacement_cost',
+    'rating',
+    'special_features',
+    'last_update'
+UNION ALL  
+SELECT `film`.`film_id`,
+    `film`.`title`,
+    `film`.`description`,
+    `film`.`release_year`,
+    `film`.`language_id`,
+    `film`.`original_language_id`,
+    `film`.`rental_duration`,
+    `film`.`rental_rate`,
+    `film`.`length`,
+    `film`.`replacement_cost`,
+    `film`.`rating`,
+    `film`.`special_features`,
+    `film`.`last_update`
+FROM `sakila`.`film`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/film.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'actor_id',
+    'film_id',
+    'last_update'
+UNION ALL  
+SELECT `film_actor`.`actor_id`,
+    `film_actor`.`film_id`,
+    `film_actor`.`last_update`
+FROM `sakila`.`film_actor`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/film_actor.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'film_id',
+    'category_id',
+    'last_update'
+UNION ALL  
+SELECT `film_category`.`film_id`,
+    `film_category`.`category_id`,
+    `film_category`.`last_update`
+FROM `sakila`.`film_category`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/film_category.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'film_id',
+    'title',
+    'description'
+UNION ALL  
+SELECT `film_text`.`film_id`,
+    `film_text`.`title`,
+    `film_text`.`description`
+FROM `sakila`.`film_text`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/film_text.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'inventory_id',
+    'film_id',
+    'store_id',
+    'last_update'
+UNION ALL  
+SELECT `inventory`.`inventory_id`,
+    `inventory`.`film_id`,
+    `inventory`.`store_id`,
+    `inventory`.`last_update`
+FROM `sakila`.`inventory`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/inventory.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'language_id',
+    'name',
+    'last_update'
+UNION ALL  
+SELECT `language`.`language_id`,
+    `language`.`name`,
+    `language`.`last_update`
+FROM `sakila`.`language`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/language.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'payment_id',
+    'customer_id',
+    'staff_id',
+    'rental_id',
+    'amount',
+    'payment_date',
+    'last_update'
+UNION ALL  
+SELECT `payment`.`payment_id`,
+    `payment`.`customer_id`,
+    `payment`.`staff_id`,
+    `payment`.`rental_id`,
+    `payment`.`amount`,
+    `payment`.`payment_date`,
+    `payment`.`last_update`
+FROM `sakila`.`payment`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/payment.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'rental_id',
+    'rental_date',
+    'inventory_id',
+    'customer_id',
+    'return_date',
+    'staff_id',
+    'last_update'
+UNION ALL  
+SELECT `rental`.`rental_id`,
+    `rental`.`rental_date`,
+    `rental`.`inventory_id`,
+    `rental`.`customer_id`,
+    `rental`.`return_date`,
+    `rental`.`staff_id`,
+    `rental`.`last_update`
+FROM `sakila`.`rental`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/rental.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'staff_id',
+    'first_name',
+    'last_name',
+    'address_id',
+    'picture',
+    'email',
+    'store_id',
+    'active',
+    'username',
+    'password',
+    'last_update'
+UNION ALL  
+SELECT `staff`.`staff_id`,
+    `staff`.`first_name`,
+    `staff`.`last_name`,
+    `staff`.`address_id`,
+    `staff`.`picture`,
+    `staff`.`email`,
+    `staff`.`store_id`,
+    `staff`.`active`,
+    `staff`.`username`,
+    `staff`.`password`,
+    `staff`.`last_update`
+FROM `sakila`.`staff`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/staff.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+
+select 'store_id',
+    'manager_staff_id',
+    'address_id',
+    'last_update'
+UNION ALL  
+SELECT `store`.`store_id`,
+    `store`.`manager_staff_id`,
+    `store`.`address_id`,
+    `store`.`last_update`
+FROM `sakila`.`store`
+into outfile 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/store.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';

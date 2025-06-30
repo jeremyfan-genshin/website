@@ -1,0 +1,29 @@
+MySQL的輸出資料路徑
+存放參數: secure_file_priv
++------------------+----------------------------------------------------+
+| Variable_name    | Value                                              |
++------------------+----------------------------------------------------+
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.4\Uploads\     |
++------------------+----------------------------------------------------+
+
+
+
+INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/actor.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+🔸 說明：
+
+每個欄位（column）之間用什麼符號分隔。
+
+',' 表示用逗號分隔 → 是 CSV 格式的標準分隔符號。
+
+如果你需要完整範例（包含 SELECT），這樣寫是最常見的用法之一：
+
+sql
+複製
+編輯
+SELECT 'actor_id', 'first_name', 'last_name', 'last_update'
+UNION ALL
+SELECT actor_id, first_name, last_name, last_update FROM sakila.actor
+INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.4/Uploads/actor.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+這樣匯出的 CSV 會包含表頭。
