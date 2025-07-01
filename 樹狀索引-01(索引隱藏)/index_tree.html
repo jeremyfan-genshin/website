@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>樹狀索引清單</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .index-area {
+      width: 250px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .tree ul {
+      list-style: none;
+      padding-left: 20px;
+      margin: 5px 0;
+      display: none;
+    }
+
+    .tree li {
+      margin: 5px 0;
+      cursor: pointer;
+    }
+
+    .tree .toggle::before {
+      content: "▶";
+      display: inline-block;
+      margin-right: 5px;
+      transition: transform 0.2s;
+    }
+
+    .tree .open > .toggle::before {
+      transform: rotate(90deg);
+    }
+
+    .tree .open > ul {
+      display: block;
+    }
+
+    .tree a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .tree a:hover {
+      color: #007BFF;
+    }
+
+    .content-area {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 樹狀索引區 -->
+  <div class="index-area">
+    <div class="tree">
+      <ul>
+        <li class="parent">
+          <span class="toggle">章節一</span>
+          <ul>
+            <li><a href="#" onclick="loadContent('content1.html')">內容一-1</a></li>
+            <li><a href="#" onclick="loadContent('content2.html')">內容一-2</a></li>
+          </ul>
+        </li>
+        <li class="parent">
+          <span class="toggle">章節二</span>
+          <ul>
+            <li><a href="#" onclick="loadContent('content3.html')">內容二-1</a></li>
+            <li><a href="#" onclick="loadContent('content4.html')">內容二-2</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="loadContent('content5.html')">單獨項目</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 內容區 -->
+  <div class="content-area" id="content">
+    <h2>歡迎</h2>
+    <p>請從左邊選擇一個項目來顯示內容。</p>
+  </div>
+</div>
+
+<script>
+  // 展開/收起功能
+  document.querySelectorAll('.tree .toggle').forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      this.parentElement.classList.toggle('open');
+    });
+  });
+
+  // 載入內容
+  function loadContent(file) {
+    fetch(file)
+      .then(response => {
+        if (!response.ok) throw new Error("載入失敗");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('content').innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById('content').innerHTML = "<p>無法載入內容。</p>";
+        console.error(error);
+      });
+  }
+</script>
+
+</body>
+</html>

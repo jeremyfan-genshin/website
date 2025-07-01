@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>索引與內容區網頁</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .index-area {
+      width: 200px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #ccc;
+    }
+    .index-item {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #333;
+      text-decoration: none;
+    }
+    .index-item:hover {
+      color: #007BFF;
+    }
+    .content-area {
+      flex-grow: 1;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 索引區 -->
+  <div class="index-area">
+    <a href="#" class="index-item" onclick="loadContent('content1')">內容一</a>
+    <a href="#" class="index-item" onclick="loadContent('content2')">內容二</a>
+    <a href="#" class="index-item" onclick="loadContent('content3')">內容三</a>
+  </div>
+
+  <!-- 內容區 -->
+  <div class="content-area" id="content">
+    <h2>歡迎</h2>
+    <p>請從左邊選擇一個項目來顯示內容。</p>
+  </div>
+</div>
+
+<script>
+  const contents = {
+    content1: `
+      <h2>內容一</h2>
+      <p>這是第一個內容區的說明。</p>
+    `,
+    content2: `
+      <h2>內容二</h2>
+      <p>這裡是第二個內容區。</p>
+    `,
+    content3: `
+      <h2>內容三</h2>
+      <p>第三部分的內容在這裡。</p>
+    `
+  };
+
+  function loadContent(key) {
+    document.getElementById('content').innerHTML = contents[key];
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>可收闔樹狀索引清單</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header, footer {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .breadcrumb {
+      background-color: #f9f9f9;
+      padding: 8px 20px;
+      font-size: 0.9em;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .breadcrumb span {
+      color: #666;
+    }
+
+    .breadcrumb .active {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .index-area {
+      width: 250px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+
+    .tree ul {
+      list-style: none;
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .tree > ul {
+      display: block;
+    }
+
+    .tree li > ul {
+      display: none;
+    }
+
+    .tree .open > ul {
+      display: block;
+    }
+
+    .tree li {
+      margin: 5px 0;
+    }
+
+    .tree .toggle {
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .tree .toggle::before {
+      content: "▶";
+      display: inline-block;
+      margin-right: 5px;
+      transition: transform 0.2s;
+    }
+
+    .tree .open > .toggle::before {
+      transform: rotate(90deg);
+    }
+
+    .tree a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .tree a:hover {
+      color: #007BFF;
+    }
+
+    .content-area {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <h1>我的教學網站</h1>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb" id="breadcrumb">
+  <span>首頁</span>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+  <!-- Index Area -->
+  <div class="index-area">
+    <div class="tree">
+      <ul>
+        <li class="parent">
+          <span class="toggle">章節一</span>
+          <ul>
+            <li><a href="#" onclick="loadContent('../content1.html', '章節一 > 內容一-1')">內容一-1</a></li>
+            <li><a href="#" onclick="loadContent('../content2.html', '章節一 > 內容一-2')">內容一-2</a></li>
+          </ul>
+        </li>
+        <li class="parent">
+          <span class="toggle">章節二</span>
+          <ul>
+            <li><a href="#" onclick="loadContent('../content3.html', '章節二 > 內容二-1')">內容二-1</a></li>
+            <li><a href="#" onclick="loadContent('../content4.html', '章節二 > 內容二-2')">內容二-2</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="loadContent('../content5.html', '單一項目')">單一項目</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content-area" id="content">
+    <h2>歡迎</h2>
+    <p>請從左邊選擇一個項目來顯示內容。</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 我的網站. 保留所有權利。</p>
+</footer>
+
+<script>
+  // 展開/收起樹狀項目
+  document.querySelectorAll('.tree .toggle').forEach(function(toggle) {
+    toggle.addEventListener('click', function () {
+      this.parentElement.classList.toggle('open');
+    });
+  });
+
+  // 載入內容並更新麵包屑
+  function loadContent(file, breadcrumbPath = '') {
+    fetch(file)
+      .then(response => {
+        if (!response.ok) throw new Error("載入失敗");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('content').innerHTML = html;
+        updateBreadcrumb(breadcrumbPath);
+      })
+      .catch(error => {
+        document.getElementById('content').innerHTML = "<p>無法載入內容。</p>";
+        console.error(error);
+      });
+  }
+
+  // 更新麵包屑
+  function updateBreadcrumb(path) {
+    const container = document.getElementById('breadcrumb');
+    if (!path) {
+      container.innerHTML = '<span>首頁</span>';
+    } else {
+      const parts = path.split('>');
+      container.innerHTML = '<span>首頁</span> &gt; ' + parts.map((p, i) => {
+        return `<span class="${i === parts.length - 1 ? 'active' : ''}">${p.trim()}</span>`;
+      }).join(' &gt; ');
+    }
+  }
+</script>
+
+</body>
+</html>
