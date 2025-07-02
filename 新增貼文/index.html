@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>典籍新增系統</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; background-color: #f9f9f9; }
+    .form-section, .posts-section { margin-bottom: 30px; }
+    .post { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; background: white; }
+    .post img { max-width: 100%; margin-top: 10px; }
+    label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="form-section">
+    <h2>新增典籍內容</h2>
+    <label>標題：
+      <input type="text" id="titleInput" />
+    </label>
+    <label>內文：
+      <textarea id="contentInput" rows="4" cols="50"></textarea>
+    </label>
+    <label>上傳圖片：
+      <input type="file" id="imageInput" accept="image/*" />
+    </label>
+    <button onclick="addPost()">新增</button>
+  </div>
+
+  <div class="posts-section">
+    <h2>所有貼文</h2>
+    <div id="postsContainer"></div>
+  </div>
+
+  <script>
+    function addPost() {
+      const title = document.getElementById('titleInput').value;
+      const content = document.getElementById('contentInput').value;
+      const imageInput = document.getElementById('imageInput');
+      const postsContainer = document.getElementById('postsContainer');
+
+      if (!title || !content) {
+        alert("請填寫標題與內文！");
+        return;
+      }
+
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post';
+      postDiv.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+
+      if (imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          postDiv.appendChild(img);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      }
+
+      postsContainer.prepend(postDiv);
+
+      // 清空表單
+      document.getElementById('titleInput').value = '';
+      document.getElementById('contentInput').value = '';
+      document.getElementById('imageInput').value = '';
+    }
+  </script>
+
+</body>
+</html>

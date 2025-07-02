@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>動態抓取搜尋範例</title>
+</head>
+<body>
+  <h1>搜尋網頁內容</h1>
+  <input type="text" id="keyword" placeholder="輸入關鍵字">
+  <button onclick="search()">搜尋</button>
+
+  <div id="results"></div>
+
+  <script>
+    const pages = ["index.html", "about.html", "contact.html"];
+
+    async function fetchPageContent(url) {
+      try {
+        const res = await fetch(url);
+        const text = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, "text/html");
+        const title = doc.querySelector("title")?.textContent || url;
+        const body = doc.body.textContent.replace(/\s+/g, " ").trim();
+
+        return { url, title, content: body };
+      } catch (err) {
+        console.error(`無法抓取 ${url}:`, err);
+        return null;
+      }
+    }
+
+    async function search() {
+      const keyword = document.getElementById("keyword").value.trim();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "搜尋中...";
+
+      const allResults = await Promise.all(pages.map(fetchPageContent));
+      const matched = allResults.filter(item =>
+        item && (item.title.includes(keyword) || item.content.includes(keyword))
+      );
+
+      if (matched.length === 0) {
+        resultsDiv.innerHTML = `<p>找不到與「${keyword}」相關的內容。</p>`;
+      } else {
+        resultsDiv.innerHTML = matched.map(item => `
+          <div>
+            <a href="${item.url}" target="_blank">${item.title}</a>
+            <p>${item.content.slice(0, 100)}...</p>
+          </div>
+        `).join("");
+      }
+    }
+  </script>
+</body>
+</html>

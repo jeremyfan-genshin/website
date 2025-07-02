@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>典籍錄入系統</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background-color: #f6f1e7;
+      color: #2f2f2f;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #3c2f2f;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fffaf2;
+      padding: 30px;
+      border: 1px solid #d8c9a4;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #cbbba0;
+      border-radius: 4px;
+      background-color: #fffef9;
+    }
+
+    input[type="file"] {
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #8c6239;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Noto Serif TC', serif;
+    }
+
+    button:hover {
+      background-color: #6e4e2e;
+    }
+
+    .post {
+      border-top: 1px solid #d8c9a4;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+
+    .post h3 {
+      color: #5a4635;
+      margin-bottom: 10px;
+    }
+
+    .post p {
+      line-height: 1.6;
+    }
+
+    .post img {
+      max-width: 100%;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>典籍錄入系統</h1>
+    <div class="form-section">
+      <label for="titleInput">標題：</label>
+      <input type="text" id="titleInput" placeholder="例如：論語・學而篇"/>
+
+      <label for="contentInput">內文：</label>
+      <textarea id="contentInput" rows="6" placeholder="請輸入典籍內容…"></textarea>
+
+      <label for="imageInput">插圖上傳：</label>
+      <input type="file" id="imageInput" accept="image/*" />
+
+      <button onclick="addPost()">新增典籍</button>
+    </div>
+
+    <div class="posts-section" id="postsContainer">
+      <h2>已新增內容</h2>
+    </div>
+  </div>
+
+  <script>
+    function addPost() {
+      const title = document.getElementById('titleInput').value.trim();
+      const content = document.getElementById('contentInput').value.trim();
+      const imageInput = document.getElementById('imageInput');
+      const postsContainer = document.getElementById('postsContainer');
+
+      if (!title || !content) {
+        alert("請填寫標題與內容！");
+        return;
+      }
+
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post';
+      postDiv.innerHTML = `<h3>${title}</h3><p>${content.replace(/\n/g, '<br>')}</p>`;
+
+      if (imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          postDiv.appendChild(img);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      }
+
+      postsContainer.appendChild(postDiv);
+
+      // 清空表單
+      document.getElementById('titleInput').value = '';
+      document.getElementById('contentInput').value = '';
+      document.getElementById('imageInput').value = '';
+    }
+  </script>
+
+</body>
+</html>

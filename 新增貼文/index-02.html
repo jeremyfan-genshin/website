@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>學習筆記本</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background: #f6f1e7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #cbbba0;
+      border-radius: 5px;
+      background: #fffef8;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #8c6239;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #6e4e2e;
+    }
+
+    .note {
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .note img {
+      max-width: 100%;
+      margin-top: 10px;
+      border: 1px solid #aaa;
+    }
+
+    .note .meta {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .preview-area {
+      background: #f9f7f2;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>學習筆記本 📖</h1>
+
+  <label>標題</label>
+  <input type="text" id="titleInput" placeholder="例如：JavaScript 作用域">
+
+  <label>分類</label>
+  <select id="categoryInput">
+    <option value="程式設計">程式設計</option>
+    <option value="語言學習">語言學習</option>
+    <option value="歷史">歷史</option>
+    <option value="其他">其他</option>
+  </select>
+
+  <label>內容（支援 Markdown）</label>
+  <textarea id="contentInput" rows="6" placeholder="使用 ## 標題、**粗體**、`程式碼`..."></textarea>
+
+  <label>插入圖片</label>
+  <input type="file" id="imageInput" accept="image/*" />
+
+  <button onclick="saveNote()">儲存筆記</button>
+
+  <h2 style="margin-top: 40px;">🗂️ 筆記列表</h2>
+  <div id="notesContainer"></div>
+</div>
+
+<script>
+  const notesKey = "learningNotes";
+
+  function saveNote() {
+    const title = document.getElementById("titleInput").value.trim();
+    const category = document.getElementById("categoryInput").value;
+    const content = document.getElementById("contentInput").value.trim();
+    const imageInput = document.getElementById("imageInput");
+    const createdAt = new Date().toLocaleString();
+
+    if (!title || !content) {
+      alert("請填寫標題與內容");
+      return;
+    }
+
+    let imageData = "";
+    if (imageInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imageData = e.target.result;
+        storeNote(title, category, content, imageData, createdAt);
+      };
+      reader.readAsDataURL(imageInput.files[0]);
+    } else {
+      storeNote(title, category, content, imageData, createdAt);
+    }
+  }
+
+  function storeNote(title, category, content, image, createdAt) {
+    const note = { title, category, content, image, createdAt };
+    const notes = JSON.parse(localStorage.getItem(notesKey)) || [];
+    notes.unshift(note);
+    localStorage.setItem(notesKey, JSON.stringify(notes));
+    displayNotes();
+    clearForm();
+  }
+
+  function displayNotes() {
+    const container = document.getElementById("notesContainer");
+    const notes = JSON.parse(localStorage.getItem(notesKey)) || [];
+    container.innerHTML = "";
+    notes.forEach(note => {
+      const div = document.createElement("div");
+      div.className = "note";
+      div.innerHTML = `
+        <h3>${note.title}</h3>
+        <div class="meta">分類：${note.category}｜建立於 ${note.createdAt}</div>
+        <div class="preview-area">${marked.parse(note.content)}</div>
+        ${note.image ? `<img src="${note.image}" alt="插圖">` : ""}
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function clearForm() {
+    document.getElementById("titleInput").value = "";
+    document.getElementById("contentInput").value = "";
+    document.getElementById("imageInput").value = "";
+  }
+
+  // 初次載入時顯示
+  displayNotes();
+</script>
+
+</body>
+</html>
